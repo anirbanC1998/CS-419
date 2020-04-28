@@ -3,12 +3,14 @@ import sys
 import subprocess
 import hashlib
 
+
 def theUserEnteredOneOfTheOptions(the_option):
     if the_option == "protect":
        return True
     if the_option == "unprotect":
        return True
     return False
+
 
 # encrypts and sets permissions to owner ownly; removes the original file; results in a file like (test.txt.gpg)
 def protectFile(file):
@@ -33,14 +35,14 @@ def protectFile(file):
     if chmod_result.returncode != 0:
        print("setting permissions to owner only on encrypted file failed!")
        sys.exit()
-	
-	############################################ This is the code that includes metadata in the hash
-	password = input("Please give the password: ")
-	to_hash = md5sum_result.stdout + os.stat(file) + password
-	new_hash = hashlib.md5(new_hash.encode()).digest()
-	f = open(file + "hash.txt", "w")
-	f.write(new_hash)
-	f.close()
+   ##################This is the code that includes the metadata in the hash
+    password = input("Please give the password: ")
+    to_hash = md5sum_result.stdout + os.stat(file) + password
+    new_hash = hashlib.md5(to_hash.encode()).digest()
+    f = open(file + "hash.txt", "w")
+    f.write(new_hash)
+    f.close()
+
 
 # decrypts and sets permissions to owner only; removes a file like (test.txt.gpg); results in a file like (test.txt)
 def unprotectFile(file):
@@ -65,23 +67,23 @@ def unprotectFile(file):
     if chmod_result.returncode != 0:
        print("setting permissions to owner only on decrypted file failed!")
        sys.exit()
-	
-	password = input("Please give the password: ")
-	to_hash = md5sum_result.stdout + os.stat(file) + password
-	new_hash = hashlib.md5(new_hash.encode()).digest()
-	f = open(file + "hash.txt", "r")
-	
-	if f.read() != md5sum_result.stdout:
-		print("If you typed in the password correctly, then this message means that the file has been tampered with!")
-		sys.exit()
-	
-	f.close()
+    
+    password = input("Please give the password: ")
+    to_hash = md5sum_result.stdout + os.stat(file) + password
+    new_hash = hashlib.md5(to_hash.encode()).digest()
+    f = open(file + "hash.txt", "r")
+    
+    if f.read() != md5sum_result.stdout:
+        print("If you typed in the password correctly, then this message means that the file has been tampered with!")
+        sys.exit()
+
 	
 def executeOption(ex_option, ex_file):
     if ex_option == "protect":
        protectFile(ex_file)
     if ex_option == "unprotect":
        unprotectFile(ex_file)
+
 
 print("Type one of the following options: protect, unprotect")
 
