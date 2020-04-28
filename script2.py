@@ -25,7 +25,7 @@ def protectFile(file):
        
 ##################This is the code that includes the metadata in the hash
     password = input("Please give the preliminary password (AUDIT): ")
-    to_hash = md5sum_result.stdout.encode() + os.stat(file).encode() + password.encode()
+    to_hash = md5sum_result.stdout.encode() + os.stat(os.path.abspath(file)).encode() + password.encode()
     new_hash = hashlib.md5(to_hash)
     f = open(file + "hash.txt", "w")
     f.write(new_hash)
