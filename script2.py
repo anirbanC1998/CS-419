@@ -25,8 +25,8 @@ def protectFile(file):
        
 ##################This is the code that includes the metadata in the hash
     password = input("Please give the preliminary password (AUDIT): ")
-    to_hash = md5sum_result.stdout + os.stat(file) + password
-    new_hash = hashlib.md5(to_hash.encode()).digest()
+    to_hash = md5sum_result.stdout.encode() + os.stat(file).encode() + password.encode()
+    new_hash = hashlib.md5(to_hash)
     f = open(file + "hash.txt", "w")
     f.write(new_hash)
     f.close()
@@ -71,11 +71,11 @@ def unprotectFile(file):
        sys.exit()
     
     password = input("Please give the password: ")
-    to_hash = md5sum_result.stdout + os.stat(file) + password
-    new_hash = hashlib.md5(to_hash.encode()).digest()
+    to_hash = md5sum_result.stdout.encode() + os.stat(file).encode() + password.encode()
+    new_hash = hashlib.md5(to_hash)
     f = open(file + "hash.txt", "r")
     
-    if f.read() != md5sum_result.stdout:
+    if f.read() != new_hash:
         print("If you typed in the password correctly, then this message means that the file has been tampered with!")
         sys.exit()
 
