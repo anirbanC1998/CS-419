@@ -14,12 +14,22 @@ def theUserEnteredOneOfTheOptions(the_option):
 
 # encrypts and sets permissions to owner ownly; removes the original file; results in a file like (test.txt.gpg)
 def protectFile(file):
-    md5sum_result = subprocess.run(["md5sum", file], stderr=subprocess.DEVNULL, text=True)
+    
+    
+    md5sum_result = subprocess.run(["md5sum", file], stderr=subprocess.DEVNULL)
     if md5sum_result.returncode != 0:
        print("md5 hash for file failed! The file was tampered with.")
        sys.exit()
     else:
        print("Please copy the preceding md5 hash value for your file to check file integrity. It should be the same after unprotect is executed.")
+       
+##################This is the code that includes the metadata in the hash
+    password = input("Please give the preliminary password (AUDIT): ")
+    to_hash = md5sum_result.stdout + os.stat(file) + password
+    new_hash = hashlib.md5(to_hash.encode()).digest()
+    f = open(file + "hash.txt", "w")
+    f.write(new_hash)
+    f.close()
 
     gpg_result = subprocess.run(["gpg", "-c", file], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if gpg_result.returncode != 0:
@@ -35,14 +45,6 @@ def protectFile(file):
     if chmod_result.returncode != 0:
        print("setting permissions to owner only on encrypted file failed!")
        sys.exit()
-   ##################This is the code that includes the metadata in the hash
-    password = input("Please give the password: ")
-    to_hash = md5sum_result.stdout + os.stat(file) + password
-    new_hash = hashlib.md5(to_hash.encode()).digest()
-    f = open(file + "hash.txt", "w")
-    f.write(new_hash)
-    f.close()
-
 
 # decrypts and sets permissions to owner only; removes a file like (test.txt.gpg); results in a file like (test.txt)
 def unprotectFile(file):
