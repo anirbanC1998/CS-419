@@ -3,15 +3,15 @@ import shutil
 import sys
 
 def userEnteredOptions(option):
-	if option == "new":
+	if option == "New":
 		return True
-	if option == "read":
+	if option == "Read":
 		return True
-	if option == "write":
+	if option == "Write":
 		return True
-	if option == "delete":
+	if option == "Delete":
 		return True
-	if option == "exit":
+	if option == "Exit":
 		return True
 	return False
 

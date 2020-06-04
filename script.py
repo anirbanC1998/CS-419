@@ -3,9 +3,9 @@ import sys
 import subprocess
 
 def theUserEnteredOneOfTheOptions(the_option):
-    if the_option == "protect":
+    if the_option == "Protect":
        return True
-    if the_option == "unprotect":
+    if the_option == "Decrypt":
        return True
     return False
 
