@@ -1,9 +1,5 @@
-CS419 System Security
+System Security - File Access
 ---------------------
-
-CS 419 System Security Project
-==============================
-
 By: Anirban Chakraborty, Kenny Cho, Julian Allen, Adam Purzynski, Anita
 Kotowska
 
@@ -19,13 +15,6 @@ Purely user level file system is fine
 
 Questions to Answer:
 ====================
-
-1.  Please explain how you encrypt and decrypt files\
-2.  Please explain how do you deal with random access/edit\
-3.  Please explain the trade-off in the design
-4.  Please explain how do you store keys\
-5.  Please explain how do you authenticate Alice\
-6.  Please explain the provided security features
 
 We encrypt files by converting the file into a textfile.gpg by hashing
 it using MD5 hashing algorithm. After we hash it, we then apply a
@@ -97,14 +86,3 @@ impossible to fake, and these times being changed results in new hashes.
 Therefore, if anything was changed the hash will not equal the one in
 the file, which will be a red flag that it was viewed by someone that
 wasn't Alice.
-
-SCRIPT2.PY WORKS IN A LINUX DISTRO IN WHICH USER CAN HAVE ROOT ACCESS, THUS HAVE ACCESS TO ABSOLUTE PATH OF FILE. RUTGERS ILABS ENVIRONMENT DOES NOT GIVE ABSOLUTE PATH OF FILE. AND DOES NOT HAVE PYTHON 3.7 AS OF THIS DATE, WHICH MEANS WE CANNOT USE TEXT PARAMETER IN SUBPROCESS
-=====================================================================================================================================================================================================================================================================================
-
-WORK SPLIT
-----------
-
-Encryption/Decryption - Kenny Cho (script.py) Linux Audit - Adam
-Purzynski (script2.py) File System - Anita Kotowska (file.py) Debugging
-and Documentation - Julian Allen Debugging and Project Leader - Anirban
-Chakraborty
